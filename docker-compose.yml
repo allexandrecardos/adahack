@@ -1,17 +1,14 @@
 version: '3.8'
 
 services:
-  postgres:
+  postgresql:
     image: postgres
-    container_name: postgres-container
+    container_name: postgresql
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=database
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: root
-      POSTGRES_USER: root
-      POSTGRES_DB: database
     volumes:
-      - /database:/adahack/postgresql
-
-volumes:
-  postgresql_data:
+      - ./database:/var/lib/postgresql/data
