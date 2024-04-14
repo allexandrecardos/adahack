@@ -3,8 +3,12 @@ import candidateService from '../services/candidate.service';
 const candidateController = {
 
   importCandidates: async (req: any, res: any) => {
-    await candidateService.importCandidates(req.body);
-    res.send({ message: 'Candidates imported successfully' });
+    try {
+      await candidateService.importCandidates(req);
+      res.send({ message: 'Candidates imported successfully' });
+    } catch (error) {
+      res.status(500).send({ message: 'Error importing candidates' });
+    }
   }
 
 };
