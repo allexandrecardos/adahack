@@ -1,9 +1,8 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import candidateRouter from './candidates/candidate.router';
 
 const router = express.Router();
 
-router.get('/', (req: Request, res: Response) => {
-  res.json({ message: 'Hello world!' });
-});
+router.use('/candidates', candidateRouter);
 
 export default router;
