@@ -30,3 +30,9 @@ model Candidatos {
   infos_tecnicas      String
   funcionario_interno String
 }
+
+model Users {
+  id                  String @id @default(uuid())
+  email               String @unique
+  password            String
+}
