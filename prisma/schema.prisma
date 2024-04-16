@@ -15,18 +15,18 @@ datasource db {
 
 model Candidatos {
   id                  String  @id @default(uuid())
-  nome                String
-  idade               Int
-  telefone            String
-  email               String
-  etnia               String
-  genero              String
-  graduacao           String
-  senioridade         String
-  cidade              String
-  bairro              String
-  estado              String
-  pcd                 Boolean
-  infos_tecnicas      String
-  funcionario_interno String
+  nome                String?
+  idade               String?
+  telefone            String?
+  email               String?
+  etnia               String?
+  genero              String?
+  graduacao           String?
+  senioridade         String?
+  cidade              String?
+  bairro              String?
+  estado              String?
+  pcd                 Boolean?
+  infos_tecnicas      String[]
+  funcionario_interno Boolean?
 }

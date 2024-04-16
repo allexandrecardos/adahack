@@ -15,7 +15,9 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/http-status-codes": "^1.2.0",
     "@types/node": "^20.12.7",
+    "@types/yup": "^0.32.0",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
     "eslint": "^8.57.0",
@@ -29,6 +31,8 @@
   "dependencies": {
     "@prisma/client": "^5.12.1",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "http-status-codes": "^2.3.0",
+    "yup": "^1.4.0"
   }
 }
