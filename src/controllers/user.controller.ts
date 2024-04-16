@@ -25,7 +25,6 @@ export const registerUser = async (req: Request, res: Response) => {
     if (error instanceof CustomError) {
       return res.status(error.statusCode).json({ message: error.message });
     }
-    console.error(error);
     return res.status(500).json({ message: 'Erro interno do servidor' });
   }
 };
@@ -53,7 +52,6 @@ export const verifyLogin = async (req: Request, res: Response) => {
     if (error instanceof CustomError) {
       return res.status(error.statusCode).json({ message: error.message });
     }
-    console.error(error);
     return res.status(500).json({ message: 'Erro interno do servidor' });
   }
 };
