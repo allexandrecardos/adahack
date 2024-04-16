@@ -2,7 +2,7 @@ import { CandidateSchema } from '../validations/CandidateValidator';
 import { ICandidateCreate, ICandidateFilter } from '../interface/ICandidate';
 import { prisma } from '../client';
 import { candidateCreateRepository, getCandidateFilterRepository } from '../repositories/CandidateRepository';
-import { isEmailValid } from '../utils/validateEmail';
+import { isEmailValid } from '../utils/isEmail';
 
 export const candidateCreateService = async (data: ICandidateCreate) => {
   try {
