@@ -6,15 +6,19 @@
 
 | Stack   | Version       | 
 | :---------- | :--------- | 
-| node |  | 
-| typescript |  | 
-| express |  | 
-| prisma |  | 
-| prettier |  | 
-| eslint |  | 
-| dotenv |  | 
+| node | 20.11.1 | 
+| typescript | ^5.4.5 | 
+| express | ^4.19.2 | 
+| prisma | ^5.12.1 | 
+| prettier | ^3.2.5 | 
+| eslint | ^8.57.0 | 
+| dotenv | ^16.4.5 | 
 | multer |  | 
 | csv-parser |  | 
+| bcrypt | ^5.1.1 | 
+| http-status-codes | ^2.3.0 | 
+| jsonwebtoken | ^9.0.2 | 
+| yup | ^1.4.0 | 
 
 ## Variáveis de Ambiente
 
