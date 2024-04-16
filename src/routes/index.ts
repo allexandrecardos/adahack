@@ -8,11 +8,10 @@ router.get('/', (req: Request, res: Response) => {
   res.json({ message: 'Hello world!' });
 });
 
+
 router.use(userRouter);
 router.use(auth);
 
-router.get('/teste', (req: Request, res: Response) => {
-  res.json({ message: 'Hello world!' });
-});
+
 
 export default router;
