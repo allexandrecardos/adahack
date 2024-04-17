@@ -21,6 +21,8 @@ _Link: <a>https://github.com/allexandrecardos/adahack</a>_
 - Dashboard de visualização
 - Validações
 - Expansão da modelagem de dados (banco & _schemas_)
+- Documentação Swagger
+- Melhoria do ranqueamento
 
 ## Proposta
 
@@ -28,7 +30,7 @@ A API consiste em um sistema de RH dinâmico e eficiente para currículos/candid
 
 ## Arquitetura
 
-A arquitetura é voltada para a Clean Architecture, distribuindo as funções de forma eficiente em cada parte do código, desestruturando e removendo a complexidade da estrutura. Outro ponto importante foi o desenvolvimento orientado ao paradigma funcional.
+A arquitetura é voltada para a Clean Architecture, distribuindo as funções de forma eficiente em cada parte do código, desestruturando e removendo a complexidade da estrutura. Outro ponto importante foi o desenvolvimento em sua maioria orientado ao paradigma funcional.
 
 A utilização da Clean Architecture é uma abordagem que visa separar as preocupações dentro de um sistema, garantindo a sua manutenibilidade e escalabilidade. Ao desestruturar a complexidade, a arquitetura torna-se mais fácil de entender e modificar, contribuindo para um desenvolvimento mais eficiente e sustentável a longo prazo.
 
@@ -100,9 +102,6 @@ npm run start
 http://localhost:8080
 ```
 
-## Modelagem
-
-
 ## Endpoints
 
 ### Consultar todos os candidatos
@@ -134,9 +133,9 @@ ___
 | funcionario_interno | boolean  | **Obrigatório**.Indicação se é funcionário interno  |
 ___
 
-### Filtros específicos (OR)
+### Filtros específicos
 ```http
-  GET /candidates/filter-or
+  GET /candidates/filter
 ```
 
 | Parâmetro   | Tipo       | Descrição                           |
@@ -145,16 +144,7 @@ ___
 | campo | `custom` | Campos de filtro [ etnia, genero, cidade, senioridade ] |
 
 ___
-### Filtros específicos (AND)
-```http
-  GET /candidates/filter-and
-```
 
-| Parâmetro   | Tipo       | Descrição                           |
-| :---------- | :--------- | :---------------------------------- |
-| infos_tecnicas | `array` | **Obrigatório**. Informações técnicas do usuário |
-| campo | `custom` | Campos de filtro [ etnia, genero, cidade, senioridade ] |
-___
 ### Importar candidatos para o banco de talentos (CSV)
 
 ```http
@@ -163,7 +153,7 @@ ___
 
 | Parâmetro   | Tipo       | Descrição                           |
 | :---------- | :--------- | :---------------------------------- |
-| `file` | `File` | **Obrigatório**. Arquivo CSV no com o s headers abaixo |
+| `file` | `File` | **Obrigatório**. Arquivo CSV no com os headers abaixo |
 
 | Headers   |
 | :---------- | 
@@ -185,7 +175,7 @@ ___
 
 ### Criar um usuário
 ```http
-  GET /register
+  POST /register
 ```
 
 | Parâmetro   | Tipo       | Descrição                           |
@@ -198,7 +188,7 @@ ___
 
 ### Logar/Acessar API
 ```http
-  GET /login
+  POST /login
 ```
 
 | Parâmetro   | Tipo       | Descrição                           |
