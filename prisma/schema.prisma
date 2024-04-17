@@ -28,5 +28,5 @@ model Candidatos {
   estado              String
   pcd                 Boolean
   infos_tecnicas      String
-  funcionario_interno String
+  funcionario_interno Boolean
 }

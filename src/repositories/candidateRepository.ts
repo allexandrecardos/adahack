@@ -1,9 +1,10 @@
-import { Repository } from 'typeorm';
-import { Candidato } from 'src/models/candidate';
+import { prisma } from '../client';
+import { Candidato } from '../models/candidate';
 
-class CandidatoRepository extends Repository<Candidato> {
+class CandidatoRepository  {
     async cadastrar(candidato: Candidato): Promise<Candidato> {
-        return this.save(candidato);
+        console.log(candidato);
+        return await prisma.candidatos.create({data: candidato});
     }
 }
 

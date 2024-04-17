@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-import { candidatoController } from 'src/controllers/candidateController';
+import { candidatoController } from '../controllers/candidateController';
 
-const router: Router = express.Router();
+const registerRoute: Router = express.Router();
 
-router.post('/candidatos', candidatoController.criar);
+registerRoute.post('/candidatos', candidatoController.criar);
 
-export default router;
+export default registerRoute;
