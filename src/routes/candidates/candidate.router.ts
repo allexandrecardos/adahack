@@ -1,11 +1,9 @@
 import express from 'express';
-import candidateController from '../../controllers/candidate.controller';
+import candidateController, { candidateNewFilterController } from '../../controllers/candidate.controller';
 import multer from 'multer';
 import {
   candidateCreateConrtoller,
   CandidateList,
-  getCandidateFilterControllerOr,
-  getCandidateFilterControllerAnd,
 } from '../../controllers/candidate.controller';
 
 const router = express.Router();
@@ -15,7 +13,6 @@ router.post('/upload', upload.single('file'), candidateController.importCandidat
 
 router.get('/', CandidateList);
 router.post('/', candidateCreateConrtoller);
-router.post('/filter-or', getCandidateFilterControllerOr);
-router.post('/filter-and', getCandidateFilterControllerAnd);
+router.post('/filter', candidateNewFilterController);
 
 export default router;
