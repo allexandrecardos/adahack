@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { loginService, registerService } from '../services/user.services';
-import { CustomError } from '../utils/CustomError';
-import { isEmailValid } from '../utils/isEmail';
+import { CustomError } from '../utils/custom-error';
+import { isEmailValid } from '../utils/is-email';
 
 export const registerUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  
+
   try {
     if (!email || !password) {
       throw new CustomError('Email ou password não foram fornecidos', 400);
@@ -32,7 +32,7 @@ export const registerUser = async (req: Request, res: Response) => {
 export const verifyLogin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  
+
   try {
     if (!email || !password) {
       throw new CustomError('Email ou password não foram fornecidos', 400);
@@ -45,7 +45,7 @@ export const verifyLogin = async (req: Request, res: Response) => {
     if (!isEmailValid(email)) {
       throw new CustomError('Email inválido', 400);
     }
-    
+
     const login = await loginService(email, password);
     return res.status(200).json(login);
   } catch (error: any) {

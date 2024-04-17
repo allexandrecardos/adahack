@@ -14,9 +14,9 @@ datasource db {
 }
 
 model Candidatos {
-  id                  String  @id @default(uuid())
+  id                  String   @id @default(uuid())
   nome                String?
-  idade               String?
+  data_nascimento     String?
   telefone            String?
   email               String?
   etnia               String?
@@ -32,7 +32,7 @@ model Candidatos {
 }
 
 model Users {
-  id                  String @id @default(uuid())
-  email               String @unique
-  password            String
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
 }

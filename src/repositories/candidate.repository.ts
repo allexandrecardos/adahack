@@ -1,5 +1,5 @@
 import { prisma } from './../client';
-import { ICandidateCreate, ICandidateFilter } from '../interface/ICandidate';
+import { ICandidateCreate, ICandidateFilter } from '../interface/candidate.interface';
 
 const candidateRepository = {
 
@@ -42,7 +42,7 @@ export const candidateCreateRepository = async (data: ICandidateCreate) => {
         nome: data.nome,
         infos_tecnicas: data.infos_tecnicas,
         etnia: data.etnia,
-        idade: data.idade,
+        data_nascimento: data.data_nascimento,
         telefone: data.telefone,
         email: data.email,
         estado: data.estado,
@@ -71,7 +71,7 @@ export const getCandidateFilterRepositoryOr = async (data: ICandidateFilter) => 
           { nome: { contains: data.nome, mode: 'insensitive' } },
           { infos_tecnicas: { hasSome: data.infos_tecnicas } },
           { etnia: { contains: data.etnia, mode: 'insensitive' } },
-          { idade: { contains: data.idade } },
+          { data_nascimento: { contains: data.data_nascimento } },
           { telefone: { contains: data.telefone } },
           { email: { contains: data.email } },
           { estado: { contains: data.estado } },
@@ -101,7 +101,7 @@ export const getCandidateFilterRepositoryAnd = async (data: ICandidateFilter) =>
           { nome: { contains: data.nome, mode: 'insensitive' } },
           { infos_tecnicas: { hasSome: data.infos_tecnicas } },
           { etnia: { contains: data.etnia, mode: 'insensitive' } },
-          { idade: { contains: data.idade } },
+          { data_nascimento: { contains: data.data_nascimento } },
           { telefone: { contains: data.telefone } },
           { email: { contains: data.email } },
           { estado: { contains: data.estado } },

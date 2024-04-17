@@ -1,6 +1,6 @@
-import candidateService from '../services/candidate.service';
+import { candidateService, candidateServiceClass } from '../services/candidate.service';
 import { prisma } from '../client';
-import { ICandidateFilter, ICandidateCreate } from '../interface/ICandidate';
+import { ICandidateFilter, ICandidateCreate } from '../interface/candidate.interface';
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import {
@@ -43,7 +43,7 @@ export const candidateCreateConrtoller = async (req: Request, res: Response) => 
       return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Invalid data' });
     }
 
-    const response = await candidateCreateService(data);
+    const response = await candidateServiceClass.execute(data);
 
     if (!response) {
       return res.status(StatusCodes.BAD_REQUEST).json({ error: 'Failed send data for service' });

@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 export const CandidateSchema = yup.object({
   nome: yup.string().required('Nome field is required'),
-  idade: yup.string().required('Idade field is required'),
+  data_nascimento: yup.string().required('Data de Nascimento field is required'),
   telefone: yup.string().required('Telefone field is required'),
   email: yup.string().email().required('Email field is required'),
   estado: yup.string().required('Estado field is required'),
