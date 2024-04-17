@@ -12,9 +12,10 @@ router.use(registerRoute);
 export default router;
 export default router;
 import express, { Request, Response } from 'express';
+import candidateRouter from './candidates/candidate.router';
+import express from 'express';
 import { userRouter } from './user.routes';
 import { auth } from '../middlewares/auth.middleware';
-
 import {
   candidateCreateConrtoller,
   CandidateList,
@@ -24,12 +25,15 @@ import {
 
 const router = express.Router();
 
+router.use(userRouter);
+
+// router.use(auth);
+
+router.use('/candidates', candidateRouter);
+
 router.get('/get-all-candidates', CandidateList);
 router.post('/create-candidate', candidateCreateConrtoller);
 router.post('/filter-or-candidate', getCandidateFilterControllerOr);
 router.post('/filter-and-candidate', getCandidateFilterControllerAnd);
-
-router.use(userRouter);
-router.use(auth);
 
 export default router;

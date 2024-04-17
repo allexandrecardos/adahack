@@ -1,4 +1,5 @@
 import { prisma } from './../client';
+import { ICandidateCreate, ICandidateFilter } from '../interface/ICandidate';
 
 const candidateRepository = {
 
@@ -33,10 +34,6 @@ const candidateRepository = {
   }
 
 };
-
-export default candidateRepository;
-import { ICandidateCreate, ICandidateFilter } from '../interface/ICandidate';
-
 
 export const candidateCreateRepository = async (data: ICandidateCreate) => {
   try {
@@ -125,3 +122,5 @@ export const getCandidateFilterRepositoryAnd = async (data: ICandidateFilter) =>
     return { error: 'Failed to filter candidate', message: error.message };
   }
 };
+
+export default candidateRepository;
