@@ -3,8 +3,8 @@ import candidateController from '../../controllers/candidate.controller';
 import multer from 'multer';
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
+const upload = multer();
 
-router.get('/upload', upload.single('file'), candidateController.importCandidates);
+router.post('/upload',upload.single('file'), candidateController.importCandidates);
 
 export default router;

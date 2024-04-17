@@ -6,6 +6,9 @@ const candidateRepository = {
     return await prisma.candidatos.create({ data: candidate });
   },
 
+  createMany: async (candidate: any) => {
+    return await prisma.candidatos.createMany({ data: candidate });
+  },
   findOne: async (id: string) => {
     return await prisma.candidatos.findFirst({
       where: { id },

@@ -10,7 +10,6 @@ const candidateController = {
       res.status(500).send({ message: 'Error importing candidates' });
     }
   }
-
 };
 
 export default candidateController;
