@@ -96,7 +96,10 @@ npm run build
 npm run start
 ```
 
-7. Acessar a API
+7. Importe os dados para o banco usando o arquivo **database/candidates.csv** usando a rota de **candidates/upload**.
+- Os dados desse CVS foram gerados por IA e contém dados duplicados.
+
+8. Acessar a API
 - Rotas: [Endpoints](#Endpoints)
 ```
 http://localhost:8080
