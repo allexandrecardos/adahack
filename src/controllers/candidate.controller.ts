@@ -1,4 +1,4 @@
-import candidateService from '../services/candidate.service';
+import candidateService, { getCandidateNewFilterServices } from '../services/candidate.service';
 import { prisma } from '../client';
 import { ICandidateFilter, ICandidateCreate } from '../interface/ICandidate';
 import { Request, Response } from 'express';
@@ -78,6 +78,22 @@ export const getCandidateFilterControllerAnd = async (req: Request, res: Respons
     const data: ICandidateFilter = req.body;
 
     const response = await getCandidateFilterServicesAnd(data);
+
+    return res.status(StatusCodes.OK).json(response);
+  } catch (error: any) {
+    console.error(error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: 'failure to filter candidates', validator: error.errors });
+  }
+};
+
+
+export const candidateNewFilterController = async (req: Request, res: Response) => {
+  try {
+    const data: ICandidateFilter = req.body;
+
+    const response = await getCandidateNewFilterServices(data);
 
     return res.status(StatusCodes.OK).json(response);
   } catch (error: any) {

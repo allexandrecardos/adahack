@@ -8,6 +8,7 @@ import {
   CandidateList,
   getCandidateFilterControllerOr,
   getCandidateFilterControllerAnd,
+  candidateNewFilterController,
 } from '../controllers/candidate.controller';
 
 const router = express.Router();
@@ -24,5 +25,8 @@ router.get('/get-all-candidates', CandidateList);
 router.post('/create-candidate', candidateCreateConrtoller);
 router.post('/filter-or-candidate', getCandidateFilterControllerOr);
 router.post('/filter-and-candidate', getCandidateFilterControllerAnd);
+
+
+router.post('/filter', candidateNewFilterController);
 
 export default router;

@@ -2,7 +2,7 @@ import { CandidateSchema } from '../validations/CandidateValidator';
 import { ICandidateCreate, ICandidateFilter } from '../interface/ICandidate';
 import { prisma } from '../client';
 import csvParser from 'csv-parser';
-import candidateRepository from '../repositories/candidate.repository';
+import candidateRepository, { getCandidateNewFilterRepository } from '../repositories/candidate.repository';
 import { Readable, Transform, Writable, pipeline } from 'stream';
 import { promisify } from 'util';
 import {
@@ -134,6 +134,21 @@ export const getCandidateFilterServicesOr = async (data: ICandidateFilter) => {
 export const getCandidateFilterServicesAnd = async (data: ICandidateFilter) => {
   try {
     const response = await getCandidateFilterRepositoryAnd(data);
+    return response;
+  } catch (error: any) {
+    console.error(error);
+    return { error: 'Failed to filter candidate', message: error.message };
+  }
+};
+
+
+export const getCandidateNewFilterServices = async (data: ICandidateFilter) => {
+  try {
+    const response = await getCandidateNewFilterRepository(data);
+    console.log(response)
+
+
+    
     return response;
   } catch (error: any) {
     console.error(error);
