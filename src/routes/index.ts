@@ -1,3 +1,11 @@
+import express from 'express';
+import candidateRouter from './candidates/candidate.router';
+
+const router = express.Router();
+
+router.use('/candidates', candidateRouter);
+
+export default router;
 import express, { Request, Response } from 'express';
 import { userRouter } from './user.routes';
 import { auth } from '../middlewares/auth.middleware';
