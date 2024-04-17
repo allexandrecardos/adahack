@@ -1,6 +1,38 @@
 # **ADAHACK | BE - 5**
 
-## Projeto
+## Participantes
+- [@allexandrecardos](https://github.com/allexandrecardos)
+- [@LuisOtavio1](https://github.com/LuisOtavio1)
+- [@RubensLFerreira](https://github.com/RubensLFerreira)
+- [@almeidapietra](https://github.com/almeidapietra)
+- [@pedrohrds1921](https://github.com/pedrohrds1921)
+- [@ZanetteCiriaco](https://github.com/ZanetteCiriaco)
+___
+
+## Repositório Original
+
+_Link: <a>https://github.com/allexandrecardos/adahack</a>_
+
+## Melhorias
+
+- Leitura e _import_ de outras plataformas e formatos
+- Melhoria da filtragem e dos pesos nas pesquisas
+- Melhoria na estrutura
+- Dashboard de visualização
+- Validações
+- Expansão da modelagem de dados (banco & _schemas_)
+
+## Proposta
+
+A API consiste em um sistema de RH dinâmico e eficiente para currículos/candidatos, contendo um filtro com diversos e diferentes campos de pesquisa, com foco em diversidade. A API, de acordo com a filtragem escolhida pelo usuário, retorna os candidatos mais aderentes à pesquisa. Além do filtro já pré-selecionado, também podem ser adicionados pesos à pesquisa para ranquear os candidatos dentro da lista. É possível importar registros através de um arquivo CSV para alimentar o banco de talentos.
+
+## Arquitetura
+
+A arquitetura é voltada para a Clean Architecture, distribuindo as funções de forma eficiente em cada parte do código, desestruturando e removendo a complexidade da estrutura. Outro ponto importante foi o desenvolvimento orientado ao paradigma funcional.
+
+A utilização da Clean Architecture é uma abordagem que visa separar as preocupações dentro de um sistema, garantindo a sua manutenibilidade e escalabilidade. Ao desestruturar a complexidade, a arquitetura torna-se mais fácil de entender e modificar, contribuindo para um desenvolvimento mais eficiente e sustentável a longo prazo.
+
+O enfoque no paradigma funcional também traz benefícios significativos, especialmente em termos de legibilidade, reutilização de código e capacidade de testar as funções de forma isolada. Isso pode resultar em um código mais conciso e menos propenso a erros, além de promover uma abordagem mais declarativa e expressiva para resolver problemas.
 
 ## Stacks
 
@@ -13,12 +45,13 @@
 | prettier | ^3.2.5 | 
 | eslint | ^8.57.0 | 
 | dotenv | ^16.4.5 | 
-| multer |  | 
-| csv-parser |  | 
+| multer | ^1.4.5-lts.1 | 
+| csv-parser | ^3.0.0 | 
 | bcrypt | ^5.1.1 | 
 | http-status-codes | ^2.3.0 | 
 | jsonwebtoken | ^9.0.2 | 
 | yup | ^1.4.0 | 
+| cors | ^2.8.5 | 
 
 ## Variáveis de Ambiente
 
@@ -27,6 +60,8 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 `PORT`
 
 `DATABASE_URL`
+
+`JWT_SECRET`
 
 ## Instalação
 
@@ -58,13 +93,117 @@ npm run build
 ```
 npm run start
 ```
+
+7. Acessar a API
+- Rotas: [Endpoints](#Endpoints)
+```
+http://localhost:8080
+```
+
+## Modelagem
+
+
+## Endpoints
+
+### Consultar todos os candidatos
+```http
+  GET /candidates
+```
 ___
 
-### Participantes
+### Criar um único candidato
+```http
+  POST /candidates
+```
+
+| Parâmetro         | Tipo     | Descrição                            |
+| ----------------- | -------- | ----------------------------------- |
+| nome              | string   | **Obrigatório**.Nome do usuário                     |
+| data_nascimento             | string   | **Obrigatório**.Idade do usuário                    |
+| telefone          | string   | **Obrigatório**.Número de telefone do usuário       |
+| email             | string   | **Obrigatório**.Endereço de e-mail do usuário       |
+| etnia             | string   | **Obrigatório**.Etnia do usuário                    |
+| genero            | string   | **Obrigatório**.Gênero do usuário                   |
+| graduacao         | string   | **Obrigatório**.Nível de graduação do usuário       |
+| senioridade       | string   | **Obrigatório**.Nível de senioridade do usuário     |
+| cidade            | string   | **Obrigatório**.Cidade do usuário                   |
+| bairro            | string   | **Obrigatório**.Bairro do usuário                   |
+| estado            | string   | **Obrigatório**.Estado do usuário                   |
+| pcd               | boolean   | **Obrigatório**.Indicação de deficiência do usuário |
+| infos_tecnicas    | string   | **Obrigatório**. Informações técnicas do usuário     |
+| funcionario_interno | boolean  | **Obrigatório**.Indicação se é funcionário interno  |
 ___
-- [@allexandrecardos](https://github.com/allexandrecardos)
-- [@LuisOtavio1](https://github.com/LuisOtavio1)
-- [@RubensLFerreira](https://github.com/RubensLFerreira)
-- [@almeidapietra](https://github.com/almeidapietra)
-- [@pedrohrds1921](https://github.com/pedrohrds1921)
-- [@ZanetteCiriaco](https://github.com/ZanetteCiriaco)
+
+### Filtros específicos (OR)
+```http
+  GET /candidates/filter-or
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| infos_tecnicas | `array` | **Obrigatório**. Informações técnicas do usuário |
+| campo | `custom` | Campos de filtro [ etnia, genero, cidade, senioridade ] |
+
+___
+### Filtros específicos (AND)
+```http
+  GET /candidates/filter-and
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| infos_tecnicas | `array` | **Obrigatório**. Informações técnicas do usuário |
+| campo | `custom` | Campos de filtro [ etnia, genero, cidade, senioridade ] |
+___
+### Importar candidatos para o banco de talentos (CSV)
+
+```http
+  GET /candidates/upload
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `file` | `File` | **Obrigatório**. Arquivo CSV no com o s headers abaixo |
+
+| Headers   |
+| :---------- | 
+| nome |
+| idade |
+| idade |
+| telefone |
+| email |
+| etnia |
+| genero |
+| graduacao |
+| senioridade |
+| cidade |
+| bairro |
+| estado |
+| pcd |
+| funcionario_interno |
+___
+
+### Criar um usuário
+```http
+  GET /register
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `email`     | `string`   | **Obrigatório**. O endereço de e-mail do usuário. |
+| `password`  | `string`   | **Obrigatório**. A senha do usuário para autenticação. |
+
+
+___
+
+### Logar/Acessar API
+```http
+  GET /login
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `email`     | `string`   | **Obrigatório**. O endereço de e-mail do usuário. |
+| `password`  | `string`   | **Obrigatório**. A senha do usuário para autenticação. |
+
+___

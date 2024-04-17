@@ -1,5 +1,5 @@
 import { prisma } from './../client';
-import { ICandidateCreate, ICandidateFilter } from '../interface/ICandidate';
+import { ICandidateCreate, ICandidateFilter } from '../interface/candidate.interface';
 import { Prisma } from '@prisma/client';
 
 const candidateRepository = {
@@ -43,7 +43,7 @@ export const candidateCreateRepository = async (data: ICandidateCreate) => {
         nome: data.nome,
         infos_tecnicas: data.infos_tecnicas,
         etnia: data.etnia,
-        idade: data.idade,
+        data_nascimento: data.data_nascimento,
         telefone: data.telefone,
         email: data.email,
         estado: data.estado,
@@ -59,7 +59,6 @@ export const candidateCreateRepository = async (data: ICandidateCreate) => {
 
     return response;
   } catch (error: any) {
-    console.error(error);
     return { error: 'Failed to create candidate', message: error.message };
   }
 };
@@ -72,7 +71,7 @@ export const getCandidateFilterRepositoryOr = async (data: ICandidateFilter) => 
           { nome: { contains: data.nome, mode: 'insensitive' } },
           { infos_tecnicas: { hasSome: data.infos_tecnicas } },
           { etnia: { contains: data.etnia, mode: 'insensitive' } },
-          { idade: { contains: data.idade } },
+          { data_nascimento: { contains: data.data_nascimento } },
           { telefone: { contains: data.telefone } },
           { email: { contains: data.email } },
           { estado: { contains: data.estado } },
@@ -89,7 +88,6 @@ export const getCandidateFilterRepositoryOr = async (data: ICandidateFilter) => 
 
     return response;
   } catch (error: any) {
-    console.error(error);
     return { error: 'Failed to filter candidate', message: error.message };
   }
 };
@@ -102,7 +100,7 @@ export const getCandidateFilterRepositoryAnd = async (data: ICandidateFilter) =>
           { nome: { contains: data.nome, mode: 'insensitive' } },
           { infos_tecnicas: { hasSome: data.infos_tecnicas } },
           { etnia: { contains: data.etnia, mode: 'insensitive' } },
-          { idade: { contains: data.idade } },
+          { data_nascimento: { contains: data.data_nascimento } },
           { telefone: { contains: data.telefone } },
           { email: { contains: data.email } },
           { estado: { contains: data.estado } },
@@ -119,7 +117,6 @@ export const getCandidateFilterRepositoryAnd = async (data: ICandidateFilter) =>
 
     return response;
   } catch (error: any) {
-    console.error(error);
     return { error: 'Failed to filter candidate', message: error.message };
   }
 };
@@ -130,13 +127,10 @@ export const getCandidateFilterRepositoryAnd = async (data: ICandidateFilter) =>
 export const getCandidateNewFilterRepository = async (data: ICandidateFilter) => {
   try {
     const empty = Prisma.empty;
-    const etnia = Prisma.sql`AND etnia = ${data.etnia}`
-    const pcd = Prisma.sql`AND pcd = ${!!data.pcd}`
-    const genero = Prisma.sql`AND genero = ${data.genero}`
-    const interno = Prisma.sql`AND funcionario_interno = ${!!data.funcionario_interno}`
-
-
-    console.log(data.pcd)
+    const etnia = Prisma.sql`AND etnia = ${data.etnia}`;
+    const pcd = Prisma.sql`AND pcd = ${!!data.pcd}`;
+    const genero = Prisma.sql`AND genero = ${data.genero}`;
+    const interno = Prisma.sql`AND funcionario_interno = ${!!data.funcionario_interno}`;
 
     const response = await prisma.$queryRaw`SELECT * FROM "Candidatos" 
                                             WHERE "infos_tecnicas" && ARRAY[${data.infos_tecnicas}]::text[] 
@@ -156,7 +150,6 @@ export const getCandidateNewFilterRepository = async (data: ICandidateFilter) =>
 
     return response;
   } catch (error: any) {
-    console.error(error);
     return { error: 'Failed to filter candidate', message: error.message };
   }
 };
