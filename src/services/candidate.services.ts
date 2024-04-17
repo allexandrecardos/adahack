@@ -1,23 +1,22 @@
 import { CandidateSchema } from '../validations/CandidateValidator';
 import { ICandidateCreate, ICandidateFilter } from '../interface/ICandidate';
 import { prisma } from '../client';
-import { candidateCreateRepository, getCandidateFilterRepository } from '../repositories/CandidateRepository';
-import { isEmailValid } from '../utils/isEmail';
+import {
+  candidateCreateRepository,
+  getCandidateFilterRepositoryOr,
+  getCandidateFilterRepositoryAnd,
+} from '../repositories/candidate.repository';
+// import { isEmailValid } from '../utils/isEmail';
 
 export const candidateCreateService = async (data: ICandidateCreate) => {
   try {
-
-    if(isEmailValid(data.email)) {
-      throw new Error('Email is not valid');
-    }
+    // if(isEmailValid(data.email)) {
+    //   throw new Error('Email is not valid');
+    // }
 
     const candidateExists = await prisma.candidatos.findFirst({
       where: {
-        OR: [
-          { nome: { equals: data.nome } },
-          { email: { equals: data.email } },
-          { telefone: { equals: data.telefone } },
-        ],
+        OR: [{ email: { equals: data.email } }, { telefone: { equals: data.telefone } }],
       },
     });
 
@@ -37,9 +36,19 @@ export const candidateCreateService = async (data: ICandidateCreate) => {
   }
 };
 
-export const getCandidateFilterServices = async (data: ICandidateFilter) => {
+export const getCandidateFilterServicesOr = async (data: ICandidateFilter) => {
   try {
-    const response = await getCandidateFilterRepository(data);
+    const response = await getCandidateFilterRepositoryOr(data);
+    return response;
+  } catch (error: any) {
+    console.error(error);
+    return { error: 'Failed to filter candidate', message: error.message };
+  }
+};
+
+export const getCandidateFilterServicesAnd = async (data: ICandidateFilter) => {
+  try {
+    const response = await getCandidateFilterRepositoryAnd(data);
     return response;
   } catch (error: any) {
     console.error(error);

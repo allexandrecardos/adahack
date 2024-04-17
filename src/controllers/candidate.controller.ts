@@ -3,11 +3,16 @@ import { StatusCodes } from 'http-status-codes';
 
 import { prisma } from '../client';
 import { ICandidateFilter, ICandidateCreate } from '../interface/ICandidate';
-import { candidateCreateService, getCandidateFilterServices } from '../services/CandidateService';
+import {
+  candidateCreateService,
+  getCandidateFilterServicesOr,
+  getCandidateFilterServicesAnd,
+} from '../services/candidate.services';
 
 export const CandidateList = async (req: Request, res: Response) => {
   try {
     const response = await prisma.candidatos.findMany();
+    console.log(response);
     return res.status(StatusCodes.OK).json(response);
   } catch (error: any) {
     console.error(error);
@@ -40,11 +45,26 @@ export const candidateCreateConrtoller = async (req: Request, res: Response) => 
   }
 };
 
-export const getCandidateFilterController = async (req: Request, res: Response) => {
+export const getCandidateFilterControllerOr = async (req: Request, res: Response) => {
   try {
     const data: ICandidateFilter = req.body;
 
-    const response = await getCandidateFilterServices(data);
+    const response = await getCandidateFilterServicesOr(data);
+
+    return res.status(StatusCodes.OK).json(response);
+  } catch (error: any) {
+    console.error(error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: 'failure to filter candidates', validator: error.errors });
+  }
+};
+
+export const getCandidateFilterControllerAnd = async (req: Request, res: Response) => {
+  try {
+    const data: ICandidateFilter = req.body;
+
+    const response = await getCandidateFilterServicesAnd(data);
 
     return res.status(StatusCodes.OK).json(response);
   } catch (error: any) {
