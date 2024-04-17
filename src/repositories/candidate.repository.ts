@@ -1,5 +1,6 @@
 import { prisma } from './../client';
 import { ICandidateCreate, ICandidateFilter } from '../interface/candidate.interface';
+import { Prisma } from '@prisma/client';
 
 const candidateRepository = {
 
@@ -58,7 +59,6 @@ export const candidateCreateRepository = async (data: ICandidateCreate) => {
 
     return response;
   } catch (error: any) {
-    console.error(error);
     return { error: 'Failed to create candidate', message: error.message };
   }
 };
@@ -88,7 +88,6 @@ export const getCandidateFilterRepositoryOr = async (data: ICandidateFilter) => 
 
     return response;
   } catch (error: any) {
-    console.error(error);
     return { error: 'Failed to filter candidate', message: error.message };
   }
 };
@@ -118,7 +117,39 @@ export const getCandidateFilterRepositoryAnd = async (data: ICandidateFilter) =>
 
     return response;
   } catch (error: any) {
-    console.error(error);
+    return { error: 'Failed to filter candidate', message: error.message };
+  }
+};
+
+
+
+
+export const getCandidateNewFilterRepository = async (data: ICandidateFilter) => {
+  try {
+    const empty = Prisma.empty;
+    const etnia = Prisma.sql`AND etnia = ${data.etnia}`;
+    const pcd = Prisma.sql`AND pcd = ${!!data.pcd}`;
+    const genero = Prisma.sql`AND genero = ${data.genero}`;
+    const interno = Prisma.sql`AND funcionario_interno = ${!!data.funcionario_interno}`;
+
+    const response = await prisma.$queryRaw`SELECT * FROM "Candidatos" 
+                                            WHERE "infos_tecnicas" && ARRAY[${data.infos_tecnicas}]::text[] 
+                                            ${data.etnia ? etnia : empty}
+                                            ${data.pcd !== undefined ? pcd : empty}
+                                            ${data.funcionario_interno !== undefined ? interno : empty}
+                                            ${data.genero ? genero : empty}
+
+                                            ORDER BY 
+                                            CASE senioridade
+                                                WHEN 'Sênior' THEN 3
+                                                WHEN 'Pleno' THEN 2
+                                                WHEN 'Júnior' THEN 1
+                                                ELSE 0
+                                            END DESC;
+                                          `;
+
+    return response;
+  } catch (error: any) {
     return { error: 'Failed to filter candidate', message: error.message };
   }
 };
