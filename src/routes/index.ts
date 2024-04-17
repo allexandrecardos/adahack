@@ -1,19 +1,6 @@
-import express, { Request, Response } from 'express';
-import  registerRoute  from '../routes/candidateRegisterRoute';
 import express from 'express';
+import registerRoute from '../routes/candidateRegisterRoute';
 import candidateRouter from './candidates/candidate.router';
-
-const router = express.Router();
-
-router.use('/candidates', candidateRouter);
-
-router.use(registerRoute);
-
-export default router;
-export default router;
-import express, { Request, Response } from 'express';
-import candidateRouter from './candidates/candidate.router';
-import express from 'express';
 import { userRouter } from './user.routes';
 import { auth } from '../middlewares/auth.middleware';
 import {
@@ -28,6 +15,8 @@ const router = express.Router();
 router.use(userRouter);
 
 // router.use(auth);
+
+router.use(registerRoute);
 
 router.use('/candidates', candidateRouter);
 
