@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.use(userRouter);
 
-// router.use(auth);
+router.use(auth);
 
 router.use('/candidates', candidateRouter);
 
