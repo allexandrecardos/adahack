@@ -1,5 +1,5 @@
-import { CandidateSchema } from '../validations/CandidateValidator';
-import { ICandidateCreate, ICandidateFilter } from '../interface/ICandidate';
+import { CandidateSchema } from '../validations/candidate.validator';
+import { ICandidateCreate, ICandidateFilter } from '../interface/candidate.interface';
 import { prisma } from '../client';
 import csvParser from 'csv-parser';
 import candidateRepository from '../repositories/candidate.repository';
@@ -16,26 +16,10 @@ const pipelineAsync = promisify(pipeline);
 
 const candidateService = {
   importCandidates: async (req: any) => {
-    interface Candidate {
-      nome: string;
-      idade: string;
-      telefone: string;
-      email: string;
-      etnia: string;
-      genero: string;
-      graduacao: string;
-      senioridade: string;
-      cidade: string;
-      bairro: string;
-      estado: string;
-      pcd: boolean;
-      infos_tecnicas: string;
-      funcionario_interno: boolean;
-    }
     if (!req.file) {
       throw new Error('No file uploaded');
     }
-    let batch: Candidate[] = [];
+    let batch: ICandidateCreate[] = [];
     const readableFile = new Readable();
     readableFile.push(req.file.buffer);
     readableFile.push(null);
@@ -43,9 +27,9 @@ const candidateService = {
       objectMode: true,
       transform(chunk, encoding, callback) {
         try {
-          const candidateData: Candidate = {
+          const candidateData: ICandidateCreate = {
             nome: chunk.nome,
-            idade: chunk.idade,
+            data_nascimento: chunk.data_nascimento,
             telefone: chunk.telefone,
             email: chunk.email,
             etnia: chunk.etnia,
@@ -141,5 +125,17 @@ export const getCandidateFilterServicesAnd = async (data: ICandidateFilter) => {
   }
 };
 
+class CandidatoService {
+  constructor(private readonly candidatoRepository: any) { }
 
-export default candidateService;
+  async execute(dadosCandidato: ICandidateCreate) {
+    return await this.candidatoRepository.create(dadosCandidato);
+  }
+}
+
+const candidateServiceClass = new CandidatoService(candidateRepository);
+
+export {
+  candidateServiceClass,
+  candidateService
+};

@@ -1,6 +1,6 @@
 export interface ICandidateCreate {
   nome: string;
-  idade: string;
+  data_nascimento: string;
   telefone: string;
   email: string;
   estado: string;
@@ -11,13 +11,13 @@ export interface ICandidateCreate {
   senioridade: string;
   funcionario_interno: boolean;
   pcd: boolean;
-  etnia: string; 
-  genero: string; 
+  etnia: string;
+  genero: string;
 }
 
 export interface ICandidateFilter {
   nome?: string;
-  idade?: string;
+  data_nascimento?: string;
   telefone?: string;
   email?: string;
   estado?: string;
@@ -28,6 +28,6 @@ export interface ICandidateFilter {
   senioridade?: string;
   funcionario_interno?: boolean;
   pcd?: boolean;
-  etnia?: string; 
-  genero?: string; 
+  etnia?: string;
+  genero?: string;
 }
