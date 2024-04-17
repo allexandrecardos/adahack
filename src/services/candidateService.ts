@@ -1,11 +1,11 @@
-import { Candidato } from '../models/candidate'; 
+import { ICandidateCreate } from '../interface/ICandidate';
 import { CandidatoRepository } from '../repositories/candidateRepository';
 
 
 class CandidatoService {
     constructor(private readonly candidatoRepository: CandidatoRepository) {}
 
-    async execute(dadosCandidato: Candidato): Promise<Candidato> {
+    async execute(dadosCandidato: ICandidateCreate) {
         return await this.candidatoRepository.cadastrar(dadosCandidato);
     }
 }

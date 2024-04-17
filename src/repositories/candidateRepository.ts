@@ -1,9 +1,8 @@
+import { ICandidateCreate } from '../interface/ICandidate';
 import { prisma } from '../client';
-import { Candidato } from '../models/candidate';
 
 class CandidatoRepository  {
-    async cadastrar(candidato: Candidato): Promise<Candidato> {
-        console.log(candidato);
+    async cadastrar(candidato: ICandidateCreate) {
         return await prisma.candidatos.create({data: candidato});
     }
 }
