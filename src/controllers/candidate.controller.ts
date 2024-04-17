@@ -1,4 +1,13 @@
 import candidateService from '../services/candidate.service';
+import { prisma } from '../client';
+import { ICandidateFilter, ICandidateCreate } from '../interface/ICandidate';
+import { Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import {
+  candidateCreateService,
+  getCandidateFilterServicesOr,
+  getCandidateFilterServicesAnd,
+} from '../services/candidate.service';
 
 const candidateController = {
 
@@ -12,17 +21,6 @@ const candidateController = {
   }
 };
 
-export default candidateController;
-import { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-
-import { prisma } from '../client';
-import { ICandidateFilter, ICandidateCreate } from '../interface/ICandidate';
-import {
-  candidateCreateService,
-  getCandidateFilterServicesOr,
-  getCandidateFilterServicesAnd,
-} from '../services/candidate.services';
 
 export const CandidateList = async (req: Request, res: Response) => {
   try {
@@ -89,3 +87,5 @@ export const getCandidateFilterControllerAnd = async (req: Request, res: Respons
       .json({ message: 'failure to filter candidates', validator: error.errors });
   }
 };
+
+export default candidateController;
